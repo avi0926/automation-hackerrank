@@ -17,26 +17,58 @@ module.exports = {
                 cout << sum_of_array;
                 return 0;
             }
-    `,`#include <bits/stdc++.h>
+    `,`
+    #include <map>
+    #include <set>
+    #include <list>
+    #include <cmath>
+    #include <ctime>
+    #include <deque>
+    #include <queue>
+    #include <stack>
+    #include <string>
+    #include <bitset>
+    #include <cstdio>
+    #include <limits>
+    #include <vector>
+    #include <climits>
+    #include <cstring>
+    #include <cstdlib>
+    #include <fstream>
+    #include <numeric>
+    #include <sstream>
+    #include <iostream>
+    #include <algorithm>
+    #include <unordered_map>
+    
     using namespace std;
-    int N;
-    int A[100];
+    
     int main()
     {
-        for(int i=0; i<3; i++)
-            scanf("%d", A+i);
-        int a, b=0, c=0;
-        for(int i=0; i<3; i++)
-        {
-            scanf("%d", &a);
-            if(a>A[i])
-                c++;
-            else if(a<A[i])
-                b++;
-        }
-        printf("%d %d\n", b, c);
+        int a0;
+        int a1;
+        int a2;
+        cin >> a0 >> a1 >> a2;
+        int b0;
+        int b1;
+        int b2;
+        cin >> b0 >> b1 >> b2;
+        int a=0,b=0;
+        if(a0>b0)
+            a++;
+        if(a0<b0)
+            b++;
+        if(a1>b1)
+            a++;
+        if(a1<b1)
+            b++;
+        if(a2>b2)
+             a++;
+        if(a2<b2)
+            b++;
+        cout<<a<<" "<<b;
         return 0;
-    }> 
+    }     
     `,`#include <cmath>
     #include <cstdio>
     #include <vector>
@@ -81,24 +113,27 @@ module.exports = {
     #include <iostream>
     #include <algorithm>
     using namespace std;
+    
+    
     int main() {
-        int p=0,n=0,z=0,a,i,j;
-        cin>>j;
-        for(i=0;i<j;i++){
-            cin>>a;
-            
-            if(a>0)
-                p++;
-            else if(a<0)
-                n++;
-            else
-                z++;
+        int N, n, total;
+        float pos = 0., neg = 0., zer = 0.;
+        
+        cin >> N;
+        
+        total = N;
+        
+        while (N--) {
+            cin >> n;
+            if (n > 0) pos++;
+            else if (n < 0) neg++;
+            else zer++;
         }
         
-        printf("%.3f\n",(float)p/j);
-        printf("%.3f\n",(float)n/j);
-        printf("%.3f",(float)z/j);
-        /* Enter your code here. Read input from STDIN. Print output to STDOUT */   
+        cout << pos / total << endl;
+        cout << neg / total << endl;
+        cout << zer / total << endl;
+        
         return 0;
     }
     `,`#include <cmath>
@@ -107,25 +142,23 @@ module.exports = {
     #include <iostream>
     #include <algorithm>
     using namespace std;
+    
+    
     int main() {
-        
-        int n,i,j,k;
-        cin>>n;
-        for(i=1;i<=n;i++)
-        {
-            for(j=1;j<=n-i;j++)
-            {
-                cout<<" ";    
-            }
-            for(k=j;k<=n;k++)
-            {
-                cout<<"#";    
-            }
-            cout<<"\n";
-        }
         /* Enter your code here. Read input from STDIN. Print output to STDOUT */   
+        int n;
+        cin >> n;
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n - i - 1; ++j) {
+                printf(" ");
+            }
+            for (int j = n - i -1; j < n; ++j) {
+                printf("#");
+            }
+            printf("\n");
+        }
         return 0;
-    } 
+    }    
     `,`#include <bits/stdc++.h>
     typedef long long LL;
     using namespace std;
