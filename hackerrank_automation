@@ -1,100 +1,67 @@
 const puppeteer = require("puppeteer");
+const mail = "kahatoh776@3dinews.com";
+const pass = "Pep@09";
+const code = require('./code');
 
-let page;
-const codeObject  = require("./hackerrank.js")
-
-const browserOpenpromise = puppeteer.launch({headless : false , defaultViewport : null});
-
-browserOpenpromise.then(function(browser){
-    let pageArr = browser.pages();
-    return pageArr;
-}).then(function(pageArr){
-    page = pageArr[0];
-    let googleOpened = page.goto("https://www.google.com/");
-    return googleOpened;
-}).then(function(){
-    let inputPageFound = page.waitForSelector(".RNNXgb input",{visible:true});
-    return inputPageFound;
-}).then(function(){
-    let ObjectTyped = page.type(".RNNXgb input","hackerrank");
-    return ObjectTyped;
-}).then(function(){
-    let Enterpressed = page.keyboard.press("Enter");
-    return Enterpressed;
-}).then(function(){
-    let waitforload = page.waitForSelector(".yuRUbf a",{visible:true});
-    return waitforload;
-}).then(function(){
-    let siteopened = page.click(".yuRUbf a");
-    return siteopened;
-}).then(function(){
-    let waitforload = page.waitForSelector(".menu-item-2887 a",{visible:true});
-    return waitforload;
-}).then(function(){
-    let clickOnLogin = page.click(".menu-item-2887 a");
-    return clickOnLogin;
-}).then(function(){
-    let waitforload = page.waitForSelector(".fl-button-wrap.fl-button-width-auto.fl-button-left a",{visible:true});
-    return waitforload;
-}).then(function(){
-    let loginpageopened = page.click(".fl-button-wrap.fl-button-width-auto.fl-button-left a");
-    return loginpageopened;
-}).then(function(){
-    let waitforload = page.waitForSelector(".custom-input.theme-m.size-large #input-1",{visible:true});
-    return waitforload;
-}).then(function(){
-    let EmailWritten = page.type(".custom-input.theme-m.size-large #input-1","kalash.raj.0987@gmail.com");
-    return EmailWritten;
-}).then(function(){
-    let PassWritten = page.type(".input-wrap.align-icon-left.has-icon #input-2","#my_life09");
-    return PassWritten;
-}).then(function(){
-    let waitforload = page.waitForSelector("button[type='submit']",{visible:true});
-    return waitforload;
-}).then(function(){
-    let loginbuttonclicked = page.click("button[type='submit']");
-    return loginbuttonclicked;
-}).then(function(){
-    let waitforload =page.waitForSelector(".card-content #base-card-2-link div span",{visible:true});
-    return waitforload;
-}).then(function(){
-    let ProblemPageOpened = page.click(".card-content #base-card-2-link div span");
-    return ProblemPageOpened;
-}).then(function(){
-    let waitforload = page.waitForSelector("a[href='/challenges/insert-a-node-at-the-tail-of-a-linked-list?isFullScreen=true'] .cta-container",{visible:true});
-    console.log("item found");
-    return waitforload;
-}).then(function(){
-    console.log("work in progress");
-    let challengeOpen = page.click("a[href='/challenges/insert-a-node-at-the-tail-of-a-linked-list?isFullScreen=true'] .cta-container");
-    return challengeOpen;
-}).then(function(){
-    let waitforload = page.waitForSelector("#content > div > div > div > div > div.community-content > div > section > div > div > div > div.contents-wrapper > div > div.fs-right-pane > div > section > div:nth-child(1) > div > div.hr-monaco-editor-wrapper > div > div.pmR.pmL.pmB.hr-monaco-custom-input-wrapper.flex > div.checkBoxWrapper > div > label > div.checkbox-wrap > input",{visible:true});
-    return waitforload;
-}).then(function(){
-    let checkBoxClicked = page.click("#content > div > div > div > div > div.community-content > div > section > div > div > div > div.contents-wrapper > div > div.fs-right-pane > div > section > div:nth-child(1) > div > div.hr-monaco-editor-wrapper > div > div.pmR.pmL.pmB.hr-monaco-custom-input-wrapper.flex > div.checkBoxWrapper > div > label > div.checkbox-wrap > input");
-    return checkBoxClicked;
-}).then(function(){
-    let codetypePadOPENED = page.waitForSelector("textarea.custominput",{visible:true});
-    return codetypePadOPENED;
-}).then(function(){
-    let codetypePadOPENED = page.waitAndcCick("textarea.custominput");
-    return codetypePadOPENED;
-}).then(function(){
-    let codetyped = page.type("textarea.custominput",codeObject.codes[0] , {delay:10});
-    return codetyped;
-})
-// .then(function(){
-//     let codetyped = page.type(".input.text-area.custominput.auto-width",codes.codes);
-//     return codetyped;
-// })
+(async function(){
+    let browser = await puppeteer.launch({ headless: false, defaultViewport: null,args: ['--start-fullscreen'] });
+    let page = await browser.newPage();
+    await page.goto('https://www.hackerrank.com/');
+    await waitAndClick('ul.menu a',page);
+    await page.waitForSelector(".fl-module-content.fl-node-content .fl-button");
+    await page.evaluate(function(){
+        let btns = document.querySelectorAll(".fl-module-content.fl-node-content .fl-button");
+        btns[1].click();
+        return;
+    });
+    await page.waitForSelector("#input-1");
+    await page.type("#input-1",mail,{ delay: 100 });
+    await page.type("#input-2",pass,{delay:100});
+    await waitAndClick('button[data-analytics="LoginPassword"]',page);
+    await waitAndClick('[data-automation="algorithms"]',page);
+    await page.waitForSelector(".filter-group");
+    await page.evaluate(function(){
+        let allDivs = document.querySelectorAll(".filter-group");
+        let div = allDivs[3];
+        let clickSelector = div.querySelector(".ui-checklist-list-item input");
+        clickSelector.click();
+        return;
+    });
+    await page.waitForSelector('.challenges-list .js-track-click.challenge-list-item');
+    let questionsArr = await page.evaluate(function(){
+        let arr = [];
+        let aTags = document.querySelectorAll('.challenges-list .js-track-click.challenge-list-item');
+        for(let i=0;i<aTags.length;i++){
+            let link =  aTags[i].href;
+            console.log(link);
+            arr.push(link);
+        }
+        return arr;
+    })
+    for(let i=0;i<questionsArr.length;i++){
+        await questionSolver(questionsArr[i],code.answers[i],page);
+    }
+})();
 
 
+async function waitAndClick(selector,page){
+    await page.waitForSelector(selector);
+    await page.click(selector);
+}
 
-
-
-
-
-.catch(function(err){
-    console.log(err);
-})
+async function questionSolver(question,answer,page){
+    await page.goto(question);
+    await waitAndClick('.checkBoxWrapper input',page);
+    await waitAndClick('.ui-tooltip-wrapper textarea',page);
+    await page.type('.ui-tooltip-wrapper textarea',answer);
+    await page.keyboard.down('Control');
+    await page.keyboard.press('A');
+    await page.keyboard.press('X');
+    await page.keyboard.up('Control');
+    await waitAndClick('.monaco-editor.no-user-select.vs',page);
+    await page.keyboard.down('Control');
+    await page.keyboard.press('A');
+    await page.keyboard.press('V');
+    await page.keyboard.up("Control");
+    await waitAndClick('.ui-btn.ui-btn-normal.ui-btn-primary.pull-right.hr-monaco-submit.ui-btn-styled',page);
+}
